@@ -16,9 +16,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        if (savedInstanceState != null) {
-            binding.titleTextView.text = savedInstanceState.getString(KEY).toString()
-        }
+        savedInstanceState?.let { binding.titleTextView.text = savedInstanceState.getString(KEY).toString() }
+
 
 
         binding.changeButton.setOnClickListener {
