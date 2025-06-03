@@ -1,17 +1,23 @@
 package ru.easycode.zerotoheroandroidtdd
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.view.View
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
+import java.io.Serializable
 
+
+private var state :State = State.Initial
 @SuppressLint("StaticFieldLeak")
 private lateinit var binding: ActivityMainBinding
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
         savedInstanceState?.let {
             if (!savedInstanceState.getBoolean(KEYTEXT)){
                 binding.rootLayout.removeView(binding.titleTextView)
@@ -29,7 +34,8 @@ class MainActivity : AppCompatActivity() {
 
 
         binding.removeButton.setOnClickListener {
-            binding.rootLayout.removeView(binding.titleTextView)
+            state = State.Removed
+            state.apply(binding.rootLayout,binding.titleTextView)
             it.isEnabled = false
         }
 
@@ -38,11 +44,40 @@ class MainActivity : AppCompatActivity() {
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
         super.onSaveInstanceState(outState, outPersistentState)
         outState.putBoolean(KEYBUTTON, binding.removeButton.isEnabled)
-        outState.putBoolean(KEYTEXT, binding.titleTextView.isAttachedToWindow)
+        outState.putSerializable(KEYTEXT, state)
     }
+
+    override fun onRestoreInstanceState(
+        savedInstanceState: Bundle?,
+        persistentState: PersistableBundle?
+    ) {
+        super.onRestoreInstanceState(savedInstanceState, persistentState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            state = savedInstanceState?.getSerializable(KEYTEXT, State::class.java)!!
+        } else {
+            savedInstanceState?.getSerializable(KEYTEXT)
+        }
+    }
+
+
 
     companion object {
         const val KEYBUTTON = "keyButton"
         const val KEYTEXT = "keyText"
+    }
+}
+
+interface State : Serializable {
+
+    fun apply(linearLayout: LinearLayout, textView: TextView)
+
+    object Initial: State {
+        override fun apply(linearLayout: LinearLayout, textView: TextView) = Unit
+    }
+
+    object Removed : State {
+        override fun apply(linearLayout: LinearLayout, textView: TextView) {
+            linearLayout.removeView(textView)
+        }
     }
 }
