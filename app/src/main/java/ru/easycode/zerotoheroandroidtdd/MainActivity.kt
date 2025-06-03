@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
             binding.removeButton.isEnabled = savedInstanceState.getBoolean(KEYBUTTON)
         }
 
+
         binding.removeButton.setOnClickListener {
             binding.rootLayout.removeView(binding.titleTextView)
             it.isEnabled = false
