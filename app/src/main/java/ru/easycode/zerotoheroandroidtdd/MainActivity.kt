@@ -12,10 +12,9 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 import java.io.Serializable
 
 
-
 @SuppressLint("StaticFieldLeak")
 private lateinit var binding: ActivityMainBinding
-private var state :State = State.Initial
+private var state: State = State.Initial
 
 
 class MainActivity : AppCompatActivity() {
@@ -27,10 +26,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.removeButton.setOnClickListener {
             state = State.Removed
-            state.apply(binding.rootLayout,binding.titleTextView)
-            state.visible(binding.removeButton,false)
-        }
+            state.apply(binding.rootLayout, binding.titleTextView,binding.removeButton)
 
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle, outPersistentState: PersistableBundle) {
@@ -41,13 +39,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-       state =  if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            savedInstanceState.getSerializable(KEYTEXT, State::class.java)?: State.Removed
+        state = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            savedInstanceState.getSerializable(KEYTEXT, State::class.java) ?: State.Removed
         } else {
             savedInstanceState.getSerializable(KEYTEXT) as State
         }
-        state.visible(binding.removeButton,savedInstanceState.getBoolean(KEYBUTTON))
-        state.apply(binding.rootLayout, binding.titleTextView)
+        state.apply(binding.rootLayout, binding.titleTextView,binding.removeButton)
 
     }
 
@@ -60,21 +57,20 @@ class MainActivity : AppCompatActivity() {
 
 interface State : Serializable {
 
-    fun apply(linearLayout: LinearLayout, textView: TextView)
-    fun visible(button: Button, isVisible: Boolean)
+    fun apply(linearLayout: LinearLayout, textView: TextView, button: Button)
 
-    object Initial: State {
-        override fun apply(linearLayout: LinearLayout, textView: TextView) = Unit
-        override fun visible(button: Button, isVisible: Boolean)  = Unit
+
+    object Initial : State {
+        override fun apply(linearLayout: LinearLayout, textView: TextView, button: Button) = Unit
+
     }
 
     object Removed : State {
-        override fun apply(linearLayout: LinearLayout, textView: TextView) {
+        override fun apply(linearLayout: LinearLayout, textView: TextView, button: Button) {
             linearLayout.removeView(textView)
+            button.isEnabled = false
         }
 
-        override fun visible(button: Button, enabled : Boolean) {
-            button.isEnabled = enabled
-        }
+
     }
 }
