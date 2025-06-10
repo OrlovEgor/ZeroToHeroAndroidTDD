@@ -9,7 +9,7 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 @SuppressLint("StaticFieldLeak")
 private lateinit var binding: ActivityMainBinding
-private var count = 0
+private var number = "0"
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,21 +19,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(view)
 
         binding.incrementButton.setOnClickListener {
-            count +=2
-            binding.countTextView.text = count.toString()
+            binding.countTextView.text = Count.Base(2).increment(number)
         }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        outState.putInt(KEY, count)
+        outState.putString(KEY, binding.countTextView.text.toString())
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        val result =  savedInstanceState.getInt(KEY)
-        binding.countTextView.text = count.toString()
-        count = result
+        val result =  savedInstanceState.getString(KEY)
+        number = result!!
+        binding.countTextView.text = number
+
     }
 
     companion object {

@@ -1,7 +1,9 @@
 package ru.easycode.zerotoheroandroidtdd
 
+import java.io.Serializable
 
-interface Count {
+
+interface Count: Serializable {
 
     fun increment(number: String): String
 
