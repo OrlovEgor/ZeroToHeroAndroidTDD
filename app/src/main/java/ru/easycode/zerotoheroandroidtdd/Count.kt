@@ -12,15 +12,11 @@ interface Count: Serializable {
     ) : Count {
 
         init {
-            if (step == -2) {
+            if (step < 1)
                 throw IllegalStateException("step should be positive, but was -2")
-            } else if (step <= 0) {
-                throw IllegalStateException()
-            }
         }
 
         override fun increment(number: String): String {
-
             val result = number.toInt() + step
             return result.toString()
         }
