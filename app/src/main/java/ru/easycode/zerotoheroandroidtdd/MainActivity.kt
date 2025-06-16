@@ -17,8 +17,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        state = count.initial(binding.countTextView.text.toString())
+
         if (savedInstanceState == null){
+            state = count.initial(binding.countTextView.text.toString())
             state.apply(binding.incrementButton,binding.decrementButton,binding.countTextView)
         }
 
