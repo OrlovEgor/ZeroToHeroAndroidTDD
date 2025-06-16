@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        state = UiState.Base(binding.countTextView.text.toString())
 
         binding.incrementButton.setOnClickListener {
             val result: UiState = count.increment(binding.countTextView.text.toString())

@@ -17,7 +17,7 @@ interface UiState: Parcelable {
     @kotlinx.parcelize.Parcelize
     data class Base(
         private val text: String
-    ) : UiState, Parcelable {
+    ) : UiState {
 
         override fun apply( button: Button,textView: TextView) {
             textView.text = text
@@ -27,7 +27,7 @@ interface UiState: Parcelable {
     @kotlinx.parcelize.Parcelize
         data class Max(
             private val text: String
-        ) : UiState, Parcelable {
+        ) : UiState {
             override fun apply( button: Button,textView: TextView) {
                 textView.text = text
                 button.isEnabled = false
