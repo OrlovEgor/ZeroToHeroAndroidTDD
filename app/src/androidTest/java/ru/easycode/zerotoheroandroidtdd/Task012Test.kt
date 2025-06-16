@@ -26,6 +26,7 @@ import org.junit.runner.RunWith
  * @see ru.easycode.zerotoheroandroidtdd.CountTest
  */
 @RunWith(AndroidJUnit4::class)
+
 class Task012Test {
 
     @get:Rule
