@@ -24,6 +24,7 @@ interface UiState: Parcelable {
         }
 
     }
+
     @kotlinx.parcelize.Parcelize
         data class Max(
             private val text: String
