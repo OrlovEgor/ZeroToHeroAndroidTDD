@@ -10,12 +10,19 @@ interface Count {
 
     class Base(
         private val step: Int,
-        private val max:Int,
+        private val max: Int,
         private val min: Int
-    ): Count {
+    ) : Count {
 
         init {
-
+            if (step < 1)
+                throw IllegalStateException("step should be positive, but was $step")
+            if (max < 1)
+                throw IllegalStateException("max should be positive, but was $max")
+            if (max < step)
+                throw IllegalStateException("max should be more than step")
+            if (max < min)
+                throw IllegalStateException("max should be more than min")
         }
 
         override fun initial(number: String): UiState {
@@ -23,11 +30,21 @@ interface Count {
         }
 
         override fun increment(number: String): UiState {
-            TODO("Not yet implemented")
+            val digits = number.toInt()
+            val result = digits + step
+            return if (result <= max)
+                UiState.Base(result.toString())
+            else
+                UiState.Max(number.toString())
         }
 
         override fun decrement(number: String): UiState {
-            TODO("Not yet implemented")
+            val digits = number.toInt()
+            val result = digits - step
+            return if (result >= max)
+                UiState.Base(result.toString())
+            else
+                UiState.Max(number.toString())
         }
     }
 
