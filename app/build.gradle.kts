@@ -15,6 +15,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildFeatures {
+            viewBinding = true
+        }
     }
 
     buildTypes {
@@ -36,6 +39,9 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.activity:activity-ktx:1.5.0")
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.9.1")
+
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
