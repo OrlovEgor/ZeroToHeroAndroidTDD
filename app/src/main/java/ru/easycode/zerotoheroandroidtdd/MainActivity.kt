@@ -12,23 +12,21 @@ import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 @SuppressLint("StaticFieldLeak")
 private lateinit var binding: ActivityMainBinding
+
+
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-    val handler = Handler(Looper.getMainLooper())
-        binding.progressBar.isVisible = false
-        binding.titleTextView.isVisible = false
+        val handler = Handler(Looper.getMainLooper())
         binding.actionButton.setOnClickListener {
-            binding.progressBar.isVisible = true
-            binding.actionButton.isEnabled = false
+            UiState.IsLoading().apply(binding.actionButton,binding.progressBar,binding.titleTextView)
             handler.postDelayed(
-                {binding.progressBar.isVisible = false
-                    binding.actionButton.isEnabled = true
-                    binding.titleTextView.isVisible = true
-                },3500
+                {
+                    UiState.IsFinish().apply(binding.actionButton,binding.progressBar,binding.titleTextView)
+                }, 3500
             )
         }
 
