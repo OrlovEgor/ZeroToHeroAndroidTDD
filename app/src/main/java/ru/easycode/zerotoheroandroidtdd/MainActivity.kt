@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             UiState.IsLoading().apply(binding.actionButton,binding.progressBar,binding.titleTextView)
             handler.postDelayed(
                 {
+
                     UiState.IsFinish().apply(binding.actionButton,binding.progressBar,binding.titleTextView)
                 }, 3500
             )
