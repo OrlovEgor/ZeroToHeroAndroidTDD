@@ -1,24 +1,24 @@
 package ru.easycode.zerotoheroandroidtdd
 
 
-import android.os.Looper
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 
-import java.util.logging.Handler
 
-class MainViewModel : ViewModel() {
-    val repo = Repository.Base()
-    val state = MutableLiveData<UiState>()
+class MainViewModel( private val liveDataWrapper: LiveDataWrapper, private val repository: Repository) {
 
+
+    val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    val liveData = liveDataWrapper.liveData()
     fun load() {
-
-        viewModelScope.launch {
-            state.postValue(UiState.ShowProgress())
-            repo.waitTimes(3500)
-            state.postValue(UiState.ShowData())
+        liveDataWrapper.update(UiState.ShowProgress)
+        scope.launch {
+            repository.load()
+            liveDataWrapper.update(UiState.ShowData)
         }
 
 

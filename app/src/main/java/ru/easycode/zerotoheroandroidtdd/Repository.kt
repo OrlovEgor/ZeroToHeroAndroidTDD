@@ -5,12 +5,12 @@ import kotlinx.coroutines.delay
 
 interface Repository {
 
-  suspend fun waitTimes(time: Int)
+  suspend fun load()
 
     class Base(): Repository {
 
-        override suspend fun waitTimes(time: Int) {
-            delay(time.toLong())
+        override suspend fun load() {
+            delay(3500.toLong())
         }
     }
 }

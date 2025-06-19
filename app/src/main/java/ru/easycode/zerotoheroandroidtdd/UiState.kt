@@ -9,7 +9,7 @@ interface UiState {
 
     fun apply(progressBar: ProgressBar, button: Button, textView: TextView)
 
-    class ShowProgress() : UiState {
+    object ShowProgress : UiState {
         override fun apply(progressBar: ProgressBar, button: Button, textView: TextView) {
             progressBar.isVisible = true
             button.isEnabled = false
@@ -18,7 +18,7 @@ interface UiState {
     }
 
 
-    class ShowData() : UiState {
+    object ShowData : UiState {
         override fun apply(progressBar: ProgressBar, button: Button, textView: TextView) {
             progressBar.isVisible = false
             button.isEnabled = true

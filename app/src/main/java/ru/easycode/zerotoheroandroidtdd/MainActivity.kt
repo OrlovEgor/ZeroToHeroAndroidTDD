@@ -17,14 +17,15 @@ private lateinit var binding: ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-        viewModel.state.observe(this) { state ->
+        val viewModel = MainViewModel(LiveDataWrapper.Base(), Repository.Base())
+
+
+        viewModel.liveData.observe(this) { state ->
             state.apply(binding.progressBar,binding.actionButton,binding.titleTextView) }
 
         binding.actionButton.setOnClickListener {
