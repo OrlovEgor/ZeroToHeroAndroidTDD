@@ -12,9 +12,10 @@ class MainViewModel(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
 
     fun load(){
-
+        liveDataWrapper.update(UiState.ShowProgress)
         scope.launch {
-
+        repository.load()
+            liveDataWrapper.update(UiState.ShowData)
         }
     }
 
