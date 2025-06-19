@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        viewModel.state.observe(this) { state ->
+        viewModel.liveData().observe(this) { state ->
             state.apply(binding.actionButton, binding.progressBar, binding.titleTextView)
         }
 

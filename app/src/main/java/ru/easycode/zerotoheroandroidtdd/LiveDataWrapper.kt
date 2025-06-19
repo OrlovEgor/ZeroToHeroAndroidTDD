@@ -3,14 +3,13 @@ package ru.easycode.zerotoheroandroidtdd
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-interface LiveDataWrapper {
+interface LiveDataWrapper: ProvideLiveData {
 
     fun update(value: UiState)
-    fun liveData(): LiveData<UiState>
 
-    class Base(): LiveDataWrapper {
-
-        val data = MutableLiveData<UiState>()
+    class Base(
+        private val data: MutableLiveData<UiState> = MutableLiveData<UiState>()
+    ): LiveDataWrapper {
 
         override fun update(value: UiState) {
             data.value = value
@@ -20,4 +19,8 @@ interface LiveDataWrapper {
             return data
         }
     }
+}
+
+interface ProvideLiveData {
+    fun liveData(): LiveData<UiState>
 }
