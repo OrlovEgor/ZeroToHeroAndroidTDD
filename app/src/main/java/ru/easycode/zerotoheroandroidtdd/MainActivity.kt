@@ -16,6 +16,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        if (savedInstanceState != null) {
+            viewModel.restore(BundleWrapper.Base(savedInstanceState))
+        }
 
         viewModel.liveData().observe(this) {
             state-> state.apply(binding.actionButton,binding.progressBar,binding.titleTextView)
@@ -34,7 +37,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        viewModel.restore(BundleWrapper.Base(savedInstanceState))
+
     }
 
 
