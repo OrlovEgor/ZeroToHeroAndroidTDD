@@ -1,7 +1,7 @@
 package ru.easycode.zerotoheroandroidtdd
 
 import android.os.Bundle
-
+import android.util.Log
 
 
 interface BundleWrapper {
@@ -18,15 +18,22 @@ interface BundleWrapper {
 
     }
 
+
+
     class Base(private val bundle: Bundle) : Mutable {
         override fun save(uiState: UiState) {
-            bundle.putParcelable("Key", uiState)
+            bundle.putParcelable(KEY, uiState)
         }
 
         override fun restore(): UiState {
-            val result = bundle.getParcelable<UiState>("Key")
-            return result!!
+            val result = bundle.getParcelable<UiState>(KEY)
+            Log.d("123", "${result.toString()}")
+            return result
         }
+    }
+
+   companion object Key {
+        const val KEY = "Key"
     }
 
 

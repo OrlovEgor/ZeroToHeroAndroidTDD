@@ -1,6 +1,6 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.lifecycle.LiveData
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -28,7 +28,7 @@ class MainViewModel(
         liveDataWrapper.update(bundleWrapper.restore())
     }
 
-    override fun liveData(): LiveData<UiState> {
+    override fun liveData(): SingleLiveEvent<UiState> {
         return liveDataWrapper.liveData()
     }
 }

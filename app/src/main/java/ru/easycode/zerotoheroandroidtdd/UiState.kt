@@ -8,11 +8,11 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.core.view.isVisible
-import kotlinx.android.parcel.Parcelize
+import kotlinx.parcelize.Parcelize
 
 
 
-interface UiState: Parcelable {
+interface UiState: Parcelable{
 
     fun apply(button: Button, progressBar: ProgressBar,textView: TextView)
 
@@ -26,12 +26,12 @@ interface UiState: Parcelable {
 
     }
 
-    @Parcelize
+   @Parcelize
     object ShowData : UiState {
         override fun apply(button: Button, progressBar: ProgressBar, textView: TextView) {
             button.isEnabled = true
             progressBar.isVisible = false
-            textView.isEnabled = true
+            textView.isVisible = true
         }
 
     }
