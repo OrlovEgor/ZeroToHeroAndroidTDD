@@ -3,7 +3,7 @@ package ru.easycode.zerotoheroandroidtdd
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 
-interface LiveDataWrapper: ProvideLiveData {
+interface LiveDataWrapper : ProvideLiveData {
 
     fun save(bundleWrapper: BundleWrapper.Save)
 
@@ -15,20 +15,21 @@ interface LiveDataWrapper: ProvideLiveData {
     ) : LiveDataWrapper {
 
         override fun save(bundleWrapper: BundleWrapper.Save) {
-            TODO("Not yet implemented")
+            liveData.value?.let { bundleWrapper.save(it) }
         }
 
         override fun update(value: UiState) {
             liveData.value = value
         }
 
-         override fun liveData(): LiveData<UiState> {
+        override fun liveData(): LiveData<UiState> {
             return liveData
         }
 
     }
 
 }
+
 interface ProvideLiveData {
     fun liveData(): LiveData<UiState>
 }

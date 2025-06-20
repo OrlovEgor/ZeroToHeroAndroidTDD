@@ -1,19 +1,42 @@
 package ru.easycode.zerotoheroandroidtdd
 
+import android.os.Bundle
+
+
+
 interface BundleWrapper {
 
-    fun save(uiState: UiState)
+    interface Save {
+        fun save(uiState: UiState)
+    }
 
-    fun restore(): UiState
+    interface Restore {
+        fun restore(): UiState
+    }
 
-    class Base(): BundleWrapper {
+    interface Mutable : Save, Restore {
+
+    }
+
+    class Base(private val bundle: Bundle) : Mutable {
         override fun save(uiState: UiState) {
-            TODO("Not yet implemented")
+            bundle.putParcelable("Key", uiState)
         }
 
         override fun restore(): UiState {
-            TODO("Not yet implemented")
+            val result = bundle.getParcelable<UiState>("Key")
+            return result!!
         }
-
     }
+
+
 }
+
+
+
+
+
+
+
+
+
