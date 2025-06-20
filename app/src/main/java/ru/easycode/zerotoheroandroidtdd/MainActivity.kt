@@ -2,12 +2,20 @@ package ru.easycode.zerotoheroandroidtdd
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.lifecycle.ViewModelProvider
 import ru.easycode.zerotoheroandroidtdd.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    val viewModel = MainViewModel(LiveDataWrapper.Base(), Repository.Base())
+    
+    private val viewModel: MainViewModel by lazy {
+        val liveDataWrapper = LiveDataWrapper.Base()
+        val repository = Repository.Base()
+        val factory = MainViewModelFactory(liveDataWrapper, repository)
+        ViewModelProvider(this, factory).get(MainViewModel::class.java)
+
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
