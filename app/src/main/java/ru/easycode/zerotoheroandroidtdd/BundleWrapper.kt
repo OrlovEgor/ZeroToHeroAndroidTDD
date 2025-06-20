@@ -33,9 +33,10 @@ interface BundleWrapper {
         }
     }
 
-   companion object Key {
-        const val KEY = "Key"
-    }
+   companion object {
+       private const val KEY = "Key"
+   }
+
 
 
 }

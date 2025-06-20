@@ -19,13 +19,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        val viewModel = MainViewModel(LiveDataWrapper.Base(), Repository.Base())
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
         if (savedInstanceState != null) {
-            viewModel.restore(BundleWrapper.Base(savedInstanceState))
+
         }
 
         viewModel.liveData().observe(this) {
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-
+        viewModel.restore(BundleWrapper.Base(savedInstanceState))
     }
 
 
