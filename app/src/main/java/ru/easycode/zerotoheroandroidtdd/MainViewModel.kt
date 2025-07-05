@@ -8,7 +8,7 @@ import kotlinx.coroutines.launch
 
 
 class MainViewModel(
-    private val liveDataWrapper: LiveDataWrapper,
+    private val liveDataWrapper: LiveDataWrapper.Mutable,
     private val repository: Repository
 ) {
 
@@ -18,12 +18,12 @@ class MainViewModel(
     fun load() {
         scope.launch {
             liveData.value = UiState.ShowProgress
-            repository.load().show()
+            repository.load().show(updateLiveData = liveDataWrapper)
         }
     }
 
     fun save(bundleWrapper: BundleWrapper.Save) {
-        bundleWrapper.save(liveDataWrapper
+        bundleWrapper.save(liveDataWrapper.liveData().value!!)
     }
 
     fun restore(bundleWrapper: BundleWrapper.Restore) {
