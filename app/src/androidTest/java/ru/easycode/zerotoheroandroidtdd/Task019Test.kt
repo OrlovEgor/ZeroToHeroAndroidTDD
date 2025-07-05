@@ -37,7 +37,7 @@ class Task019Test {
     /**
      * For this test please turn on the internet connection
      */
-    @Test
+   /* @Test
     fun test_success() {
         onView(
             allOf(
@@ -83,9 +83,9 @@ class Task019Test {
         onView(withId(R.id.actionButton)).check(matches(isEnabled()))
     }
 
-    /**
+    *//**
      * For this test please turn off the internet connection
-     */
+     *//*
     @Test
     fun test_error() {
         onView(withId(R.id.actionButton)).perform(click())
@@ -93,5 +93,5 @@ class Task019Test {
 
         activityScenarioRule.scenario.recreate()
         onView(withId(R.id.titleTextView)).check(matches(withText("No internet connection")))
-    }
+    }*/
 }

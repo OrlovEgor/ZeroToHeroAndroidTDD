@@ -16,6 +16,7 @@ import org.junit.Test
  *
  * And other unit tests
  */
+
 class MainViewModelTest {
 
     @OptIn(ExperimentalCoroutinesApi::class)
