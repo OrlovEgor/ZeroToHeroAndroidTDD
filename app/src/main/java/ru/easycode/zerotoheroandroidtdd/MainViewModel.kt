@@ -16,8 +16,9 @@ class MainViewModel(
     private val liveData = MutableLiveData<UiState>()
 
     fun load() {
+        liveDataWrapper.update(UiState.ShowProgress)
         scope.launch {
-            liveData.value = UiState.ShowProgress
+
             repository.load().show(updateLiveData = liveDataWrapper)
         }
     }
