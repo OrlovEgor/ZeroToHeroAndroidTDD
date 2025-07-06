@@ -1,6 +1,5 @@
 package ru.easycode.zerotoheroandroidtdd
 
-import androidx.lifecycle.MutableLiveData
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -13,21 +12,23 @@ class MainViewModel(
 ) {
 
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
-    private val liveData = MutableLiveData<UiState>()
+
+    fun liveData() = liveDataWrapper.liveData()
 
     fun load() {
         liveDataWrapper.update(UiState.ShowProgress)
         scope.launch {
-
-            repository.load().show(updateLiveData = liveDataWrapper)
+            val result = repository.load()
+            result.show(updateLiveData = liveDataWrapper)
         }
     }
 
     fun save(bundleWrapper: BundleWrapper.Save) {
-        bundleWrapper.save(liveDataWrapper.liveData().value!!)
+        liveDataWrapper.save(bundleWrapper)
     }
 
     fun restore(bundleWrapper: BundleWrapper.Restore) {
-        bundleWrapper.restore()
+        val state = bundleWrapper.restore()
+        liveDataWrapper.update(state)
     }
 }

@@ -22,7 +22,6 @@ interface UiState : Parcelable  {
         ) {
             button.isEnabled = false
             progressBar.isVisible = true
-            textView.isVisible = false
         }
 
     }

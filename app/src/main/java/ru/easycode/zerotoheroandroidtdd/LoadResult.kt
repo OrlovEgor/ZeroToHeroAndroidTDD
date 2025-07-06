@@ -2,22 +2,23 @@ package ru.easycode.zerotoheroandroidtdd
 
 interface LoadResult {
 
-    fun show(updateLiveData: LiveDataWrapper.Update )
+    fun show(updateLiveData: LiveDataWrapper.Update)
 
-   data class Success(private val data : SimpleResponse) : LoadResult {
+    data class Success(private val data: SimpleResponse) : LoadResult {
         override fun show(updateLiveData: LiveDataWrapper.Update) {
             updateLiveData.update(UiState.ShowData(data.text))
         }
 
     }
 
-   data class  Error(private val noConnection: Boolean) : LoadResult {
+    data class Error(private val noConnection: Boolean) : LoadResult {
+
+        val text = if (noConnection) "No internet connection" else "Something went wrong"
+
         override fun show(updateLiveData: LiveDataWrapper.Update) {
-            if (noConnection == true) {
-                updateLiveData.update(UiState.ShowData("No internet connection"))
-            } else {
-                updateLiveData.update(UiState.ShowData("Something went wrong"))
-            }
+
+            updateLiveData.update(UiState.ShowData(text))
+
         }
 
     }
